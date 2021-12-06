@@ -69,7 +69,7 @@ winner (b : bg)
   where
     (mbg, rest) = winner bg
 
--- | Given a list of numbers to draw, and a list of Bingo cards, keep play
+-- | Given a list of numbers to draw, and a list of Bingo cards, play
 --   until either draw list is exhausted or the all Bingos won.
 playBingo :: [Int] -> [Bingo] -> [(Bingo, Int)]
 playBingo _ [] = []

@@ -21,7 +21,7 @@ filterDecreasing = filterDecreasing' []
         acc' = acc ++ [isIncreasing x1 x2]
 
 -- | Given two values, return just the second value if it is bigger,
---   otherwise Nothing
+--   otherwise `Nothing`.
 isIncreasing :: Ord a => a -> a -> Maybe a
 isIncreasing a b
   | b > a = Just b
@@ -29,15 +29,15 @@ isIncreasing a b
 
 {-===================PART 2===================-}
 
--- | This just needs some preprossessing of the input
+-- | This just needs some preprossessing of the input.
 day01B :: [Int] -> Int
 day01B = day01A . map sumThree . threeMeasurements
 
--- | Creates a 3-measurement sliding window given a list
+-- | Creates a 3-measurement sliding window given a list.
 threeMeasurements :: [a] -> [(a, a, a)]
 threeMeasurements xs = zip3 xs (tail xs) (drop 2 xs)
 
--- | Adds up all numbers in the tuple of 3
+-- | Adds up all numbers in the tuple of 3.
 sumThree :: Num a => (a, a, a) -> a
 sumThree (x1, x2, x3) = x1 + x2 + x3
 

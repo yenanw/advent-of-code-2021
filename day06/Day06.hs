@@ -21,10 +21,9 @@ count ns = count' ns Map.empty
     count' [] m = m
     count' (n : ns') m = Map.insertWith (+) n 1 (count' ns' m)
 
--- | Add a key-value pair to a list of key-value pairs,
---   insert the key if it doesn't exist, otherwise add the new value 
---   with the old value.
---   This is needed because no built-in function supports the altering the keys
+-- | Add a key-value pair to a list of key-value pairs, insert the key
+--   if it doesn't exist, otherwise add the new value with the old value.
+--   This is needed because no built-in function supports the altering of keys.
 addValueTo :: Integral a => (a, a) -> [(a, a)] -> [(a, a)]
 addValueTo (k, v) [] = [(k, v)]
 addValueTo (k, v) ((k', v') : ns)

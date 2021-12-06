@@ -21,8 +21,7 @@ mcb str = zeros <= ones
 lcb :: String -> Bool
 lcb = not . mcb
 
--- | Convert a list of bits, represented by a list of Bool,
---   to a decimal number.
+-- | Convert a list of bits to a decimal number.
 binToDec :: Integral a => [Bool] -> a
 binToDec bs = foldl (\a (b, i) -> boolToIntegral b * (2 ^ i) + a) 0 bs'
   where
