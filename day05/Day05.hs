@@ -21,7 +21,7 @@ isDiagonal :: Line -> Bool
 isDiagonal (Line (x, y) (x', y')) = abs (x' - x) == abs (y' - y)
 
 -- | Scuffed band-aid solution used to generate the range [from..to],
---   because it's dumb and doesn't recognize negative step size by default
+--   because it's dumb and doesn't recognize negative step size by default.
 range :: Integral a => a -> a -> [a]
 range from to
   | to - from < 0 = [from, from - 1 .. to]
