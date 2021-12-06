@@ -1,6 +1,8 @@
-module Main where
+module Day01 where
 
-import Data.Maybe
+import           Data.Maybe                     ( catMaybes
+                                                , fromMaybe
+                                                )
 
 {-===================PART 1===================-}
 
@@ -13,19 +15,17 @@ day01A = length . catMaybes . filterDecreasing
 --   and filter out all numbers that are lower than the previous element.
 filterDecreasing :: [Int] -> [Maybe Int]
 filterDecreasing = filterDecreasing' []
-  where
-    filterDecreasing' acc [] = acc
-    filterDecreasing' acc [x] = acc ++ [isIncreasing (fromMaybe 0 $ last acc) x]
-    filterDecreasing' acc (x1 : x2 : xs) = filterDecreasing' acc' (x2 : xs)
-      where
-        acc' = acc ++ [isIncreasing x1 x2]
+ where
+  filterDecreasing' acc [] = acc
+  filterDecreasing' acc [x] = acc ++ [isIncreasing (fromMaybe 0 $ last acc) x]
+  filterDecreasing' acc (x1 : x2 : xs) = filterDecreasing' acc' (x2 : xs)
+    where acc' = acc ++ [isIncreasing x1 x2]
 
 -- | Given two values, return just the second value if it is bigger,
 --   otherwise `Nothing`.
 isIncreasing :: Ord a => a -> a -> Maybe a
-isIncreasing a b
-  | b > a = Just b
-  | otherwise = Nothing
+isIncreasing a b | b > a     = Just b
+                 | otherwise = Nothing
 
 {-===================PART 2===================-}
 

@@ -1,7 +1,6 @@
-module Main where
+module Day02 where
 
-import Data.List.Split
-import Data.Maybe
+import           Data.List.Split                ( splitOn )
 
 {-===================PART 1===================-}
 
@@ -21,14 +20,12 @@ dir :: Move -> Dir
 dir (Move _ d) = d
 
 movePos :: Pos -> Move -> Pos
-movePos (Pos x y) (Move n Up) = Pos x (y - n)
-movePos (Pos x y) (Move n Down) = Pos x (y + n)
+movePos (Pos x y) (Move n Up     ) = Pos x (y - n)
+movePos (Pos x y) (Move n Down   ) = Pos x (y + n)
 movePos (Pos x y) (Move n Forward) = Pos (x + n) y
 
 day02A :: [Move] -> Int
-day02A ms = x * y
-  where
-    Pos x y = foldl movePos (Pos 0 0) ms
+day02A ms = x * y where Pos x y = foldl movePos (Pos 0 0) ms
 
 {-===================PART 2===================-}
 
@@ -36,24 +33,21 @@ newtype Aim = Aim Int
   deriving (Eq, Show)
 
 moveAim :: Aim -> Move -> Aim
-moveAim (Aim v) (Move n Up) = Aim (v - n)
+moveAim (Aim v) (Move n Up  ) = Aim (v - n)
 moveAim (Aim v) (Move n Down) = Aim (v + n)
-moveAim aim _ = aim
+moveAim aim     _             = aim
 
 -- | There are better ways to do it and I chose to do it this way, shame...
 moveAimPos :: (Aim, Pos) -> Move -> (Aim, Pos)
 moveAimPos (aim, pos) move@(Move n _)
   | dir move == Forward = (Aim v, Pos (x + n) (y + v * n))
-  | otherwise = newAimPos
-  where
-    newAimPos@(Aim v, Pos x y) = (moveAim aim move, pos)
+  | otherwise           = newAimPos
+  where newAimPos@(Aim v, Pos x y) = (moveAim aim move, pos)
 
 -- | Could've generalised this by creating a higher-order function but
 --   that is too much effort.
 day02B :: [Move] -> Int
-day02B ms = x * y
-  where
-    (_, Pos x y) = foldl moveAimPos (Aim 0, Pos 0 0) ms
+day02B ms = x * y where (_, Pos x y) = foldl moveAimPos (Aim 0, Pos 0 0) ms
 
 {-===================RESULT===================-}
 
@@ -64,17 +58,17 @@ parse = map readMove . lines
 --   convert thes string to a 'Move'
 readMove :: String -> Move
 readMove s = readMove' hd tl
-  where
-    [hd, tl] = take 2 $ splitOn " " s
+ where
+  [hd, tl] = take 2 $ splitOn " " s
 
-    readMove' :: String -> String -> Move
-    readMove' constr n = Move (read n) (readDir constr)
+  readMove' :: String -> String -> Move
+  readMove' constr n = Move (read n) (readDir constr)
 
-    readDir :: String -> Dir
-    readDir "forward" = Forward
-    readDir "down" = Down
-    readDir "up" = Up
-    readDir _ = error "Wrong format!"
+  readDir :: String -> Dir
+  readDir "forward" = Forward
+  readDir "down"    = Down
+  readDir "up"      = Up
+  readDir _         = error "Wrong format!"
 
 main :: IO ()
 main = do
