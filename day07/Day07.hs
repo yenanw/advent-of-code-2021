@@ -6,10 +6,6 @@ import           Data.List.Split                ( splitOn )
 
 {-===================PART 1===================-}
 
--- abs (P1 - t) + abs (P2 - t) + abs (P3 - t) + ...
--- if (Pn - t) < 0  then (Pn - t) = -Pn + t
--- (P1 + P2 + P3 + ... - Pn) - t * (N - t') where N is the amount of P:s
-
 -- | Equation derived from doing some simple math.
 --   A bit scuffed tho, since it still is linear in complexity because it
 --   takes the absolute value of each crap.
@@ -17,7 +13,7 @@ cost :: Int -> [Int] -> Int
 cost t ns = sum h - sum l - t * (length h - length l)
   where (l, h) = partition (< t) ns
 
--- | Given a cost function, map it all element and return the minimum.
+-- | Given a cost function, a list of positions and return the minimum cost.
 minFuel :: (Int -> [Int] -> Int) -> [Int] -> Int
 minFuel f ns = minimum $ map (`f` ns) [0 .. maximum ns]
 
