@@ -64,7 +64,7 @@ median xs = sort xs !! (length xs `div` 2)
 day10B :: [String] -> Int
 day10B =
   median
-    . map (calcScore . (map expect . snd))
+    . map (calcScore . map expect . snd)
     . filter (isNothing . fst)
     . map validate
 
