@@ -11,8 +11,6 @@ import           Data.List                      ( (\\)
                                                 , nub
                                                 )
 import           Data.Maybe                     ( fromJust )
-import qualified Data.Set                      as S
-import           Data.Set                       ( Set )
 
 {-===================PART 1===================-}
 
@@ -61,7 +59,6 @@ day12A g = countAllPaths g visitSmallOnce
 count :: Eq a => a -> [a] -> Int
 count x = length . filter (== x)
 
-
 -- | Policy: a single small cave can be visited twice, every other caves
 --           can be visited only once.
 visitSmallTwice :: GetPossibleNodes
@@ -79,11 +76,7 @@ parse = mkGraph . map edge . lines
   where edge s = let [v1, v2] = splitOn "-" s in (v1, v2)
 
 keys :: [(String, String)] -> [String]
-keys ss = S.toList $ keys' ss S.empty
- where
-  keys' :: [(String, String)] -> Set String -> Set String
-  keys' []              s = s
-  keys' ((v1, v2) : xs) s = keys' xs $ S.insert v1 (S.insert v2 s)
+keys ss = nub (l ++ r) where (l, r) = unzip ss
 
 mkGraph :: [(String, String)] -> GraphRepr
 mkGraph ss = G.graphFromEdges [ (k, k, findConnected ss k) | k <- keys ss ]
